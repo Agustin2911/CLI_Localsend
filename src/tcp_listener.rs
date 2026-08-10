@@ -13,7 +13,9 @@ pub fn Tcp_listener(){
 
         Ok((mut stream, adrss)) => {
             println!("{}", adrss);
-            println!("introduce yes if you want to accept the connection o no to reject it ");
+
+
+            /*println!("introduce yes if you want to accept the connection o no to reject it ");
 
             let mut input = "yes";
 
@@ -32,7 +34,7 @@ pub fn Tcp_listener(){
             }
             else {
                 println!("connection reject it")
-            }
+            }*/
     }
         Err(e) => println!("couldn't get client: {}", e),
 

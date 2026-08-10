@@ -2,6 +2,8 @@ mod device_receptor;
 mod device_finder;
 mod tcp_sender;
 mod tcp_listener;
+pub mod structs;
+
 
 use tcp_sender::Tcp_sender;
 
