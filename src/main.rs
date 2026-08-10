@@ -6,9 +6,10 @@ mod tcp_listener;
 use tcp_sender::Tcp_sender;
 
 
-use std::{collections::HashMap, env, fs::{self, File}, io::{self, BufRead, BufReader, Read}, os::unix::thread, path::PathBuf, thread::spawn};
-
+use std::{collections::HashMap, env, fs::{self, File}, io::{self, BufRead, BufReader, Read}, path::PathBuf, thread::spawn};
+use std::thread;
 use device_receptor::Device_receptor;
+use tcp_listener::Tcp_listener;
 
 
 fn select_a_file() -> String{
@@ -206,12 +207,11 @@ fn send_a_file(){
 
 }
 
-
-
-
-
 fn main() {
 
+    thread::spawn(move || {
+        Tcp_listener();
+    } );
     send_a_file();
 
 
