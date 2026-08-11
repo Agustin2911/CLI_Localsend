@@ -201,11 +201,8 @@ fn send_a_file(){
     }
 
 
-   for i in files{
 
-        Tcp_sender(&device, i);
-
-   }
+    Tcp_sender(&device, files);
 
 }
 
