@@ -1,6 +1,6 @@
 
-use zeroconf::{ServiceType, event_loop, prelude::*};
-use zeroconf::{MdnsBrowser,MdnsService};
+use zeroconf::{ServiceType,  prelude::*};
+use zeroconf::{MdnsService};
 use std::time::Duration;
 
 

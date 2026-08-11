@@ -1,8 +1,8 @@
 
-use std::{arch::x86_64, io, net::TcpListener};
-use std::io::{BufRead, BufReader, BufWriter, Read, Write};
-use std::net::TcpStream;
-use crate::structs::jsons::{first_respond_reciver, request_new_ship};
+use std::fs::File;
+use std::{ io, net::TcpListener};
+use std::io::{BufRead, BufReader, Write};
+use crate::structs::jsons::{FirstRespondReciver, RequestNewShip,Chunks};
 
 pub fn Tcp_listener(){
 
@@ -10,7 +10,7 @@ pub fn Tcp_listener(){
 
     let listener=TcpListener::bind(common_adress);
 
-
+    
     match listener.unwrap().accept() {
 
 
@@ -20,17 +20,19 @@ pub fn Tcp_listener(){
 
             let mut input_request=String::new();
             buffer.read_line(&mut input_request).unwrap();
-            let json_request:request_new_ship=serde_json::from_str(&input_request).expect("error at deserializing json");
+            let json_request:RequestNewShip=serde_json::from_str(&input_request).expect("error at deserializing json");
 
-            println!("file: {:?}, size: {}, id: {}",&json_request.file_names,&json_request.complete_size,&json_request.id);
+            
+            println!("file: {:?}, id: {}",&json_request.files,&json_request.id);
 
             println!("introduce yes if you want to accept the connection o no to reject it ");
 
             let mut input = String::new();
 
-            io::stdin().read_line(&mut input);
+            io::stdin().read_line(&mut input).expect("error at reading the user output");
 
-            let mut stt:bool;
+            let  stt:bool;
+
             if input.trim() == "yes" {
 
                 println!("accepted");
@@ -42,7 +44,7 @@ pub fn Tcp_listener(){
             }
 
 
-            let response=first_respond_reciver{
+            let response=FirstRespondReciver{
                 state:stt
             };
 
@@ -60,6 +62,55 @@ pub fn Tcp_listener(){
             }
 
             let uuid=json_request.id;
+
+            let mut cont=0;
+
+
+            input_request.clear();
+            buffer.read_line( &mut input_request).expect("error at reading the file");
+            
+
+            let mut json_chunk:Chunks=serde_json::from_str(&input_request).expect("error at converting the string to a struct");
+            
+            let  mut actual_file=json_chunk.file_name.to_owned();
+
+            print!("aca");
+            while json_request.files.len()>cont{
+
+                println!("primer while");
+                let mut open_file=File::create(json_chunk.file_name.to_owned()).expect("error while creating a new file");
+                
+                
+                while  json_chunk.file_name==actual_file {
+                    
+                    println!("segundo while");
+                    if json_chunk.id==uuid{
+
+
+                        println!("entro");
+                        open_file.write_all(&json_chunk.content).expect("msg");    
+                    
+                    }
+
+                    input_request.clear();
+                    if buffer.read_line(&mut input_request).unwrap_or(0)==0{
+                        break;
+                    }
+
+                    if let Ok(new_chunk) = serde_json::from_str(&input_request) {
+                            json_chunk = new_chunk;
+                    } else {
+                        break; 
+                    }
+
+
+                }
+
+                actual_file=json_chunk.file_name.to_owned();
+                cont=cont+1;
+
+            }
+            
 
 
 
