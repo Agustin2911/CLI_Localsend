@@ -99,7 +99,6 @@ fn select_a_file() -> String{
    
 }
 
-
 }
 
 
@@ -109,16 +108,15 @@ fn select_a_file() -> String{
 
 }
 
+
+
+
+
+
+
 fn select_reciver()-> String{
 
 
-    let port:u16=8080;
-    let name:String=String::from("capi_main");
-
-    spawn(move ||{
-
-        Device_receptor(port,&name)
-    });
 
     let devices=device_finder::Device_finder();
     
@@ -208,9 +206,22 @@ fn send_a_file(){
 
 fn main() {
 
+    let port:u16=8080;
+    let mut name:String="".to_string();
+
+    io::stdin().read_line(&mut name).expect("error at reading the name");
+
+
+    spawn(move ||{
+        Device_receptor(port,&name)
+    });
+
     thread::spawn(move || {
         Tcp_listener();
     } );
+
+
+
     send_a_file();
 
 

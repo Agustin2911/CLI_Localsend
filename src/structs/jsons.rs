@@ -10,7 +10,7 @@ pub struct  RequestNewShip{
 }
 
 #[derive(Serialize,Deserialize,Debug)]
-pub struct FirstRespondReciver{
+pub struct ReciverRespond{
     pub state:bool
 }
 
@@ -21,7 +21,9 @@ pub struct Chunks{
     pub number:u16,
     pub content:Vec<u8>,
     pub id:String,
-    pub file_name:String
+    pub file_name:String,
+    pub last_chunk:bool,
+    pub last_file:bool
 }
 
 #[derive(Serialize,Deserialize,Debug)]
