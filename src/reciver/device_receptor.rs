@@ -25,7 +25,7 @@ pub fn Device_receptor(port: u16,device_name:&str) {
     service.set_name(device_name);
 
     service.set_registered_callback(Box::new(|_, _| {
-        println!("✅ Servicio registrado en Avahi. Escuchando en la red...");
+        println!("listener up!");
     }));
 
 

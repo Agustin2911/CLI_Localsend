@@ -16,17 +16,17 @@ pub fn Tcp_listener(path : &str) {
         }
     };
 
-    println!("Servidor escuchando en {}", common_address);
+    println!("Listening in  {}", common_address);
 
     loop {
         match listener.accept() {
             Ok((stream, addr)) => {
-                println!("Nueva conexión desde: {}", addr);
+                println!("New connection from: {}", addr);
                 if let Err(e) = handle_client(stream,path) {
-                    eprintln!("Error procesando al cliente {}: {}", addr, e);
+                    eprintln!("Error  {}: {}", addr, e);
                 }
             }
-            Err(e) => eprintln!("Error al aceptar conexión: {}", e),
+            Err(e) => eprintln!("Error  {}", e),
         }
     }
 }
@@ -43,7 +43,7 @@ fn handle_client(mut stream: TcpStream,path : &str) -> io::Result<()> {
         .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, format!("JSON Error: {}", e)))?;
 
     println!("file: {:?}, id: {}", &json_request.files, &json_request.id);
-    println!("Introduce 'yes' para aceptar la conexión o 'no' para rechazarla:");
+    println!("Introduce 'yes' to accept the incoming files o 'no' to reject it :");
 
     let mut input;
     let mut  stt;
@@ -130,7 +130,7 @@ fn handle_client(mut stream: TcpStream,path : &str) -> io::Result<()> {
     stream.write_all(string_respond.as_bytes())?;
     stream.flush()?;
 
-    println!("Todos los archivos han sido recibidos correctamente.");
+    println!("All the files have been recived");
     
     Ok(())
 }

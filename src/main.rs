@@ -57,7 +57,7 @@ fn main() {
    
     match &cli.comando {
         Comandos::Listen => {
-            println!("Iniciando el modo receptor (Listener)...");
+            println!("Initalizing the listener mode...");
             listener_();
         }
         Comandos::Send  => {
@@ -79,7 +79,7 @@ fn main() {
             }
             
             if name.is_none() && path.is_none() {
-                println!("No se proporcionó ni -n ni -p. Usa 'localsend config --help' para ver las opciones.");
+                println!("please use at least one of this arguments (-n or -p)");
             }
         }
     }
