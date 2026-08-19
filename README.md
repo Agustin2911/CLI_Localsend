@@ -63,5 +63,4 @@ Cambiar el directorio de descargas (Path):
 ```Bash
 cli_localsend -c -p "/ruta/a/mi/carpeta"
 ```
-Bash
-cli_localsend -c -p "/ruta/a/mi/carpeta"
+
