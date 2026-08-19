@@ -1,7 +1,13 @@
 mod structs;
 mod reciver;
 mod sender;
-
+const ASCII_ART: &str = r#"
+  ____ _     ___   _                     _                    _
+ / ___| |   |_ _| | |    ___   ___  __ _| |___  ___ _ __   __| |
+| |   | |    | |  | |   / _ \ / __|/ _` | / __|/ _ \ '_ \ / _` |
+| |___| |___ | |  | |__| (_) | (__| (_| | \__ \  __/ | | | (_| |
+ \____|_____|___| |_____\___/ \___|\__,_|_|___/\___|_| |_|\__,_|
+"#;
 
 use clap::{Parser, Subcommand};
 use crate::reciver::listener::listener_;
@@ -11,6 +17,7 @@ use crate::structs::common_functions::{ write_name, write_path};
 #[derive(Parser)]
 #[command(name = "localsend")]
 #[command(about = "A cli version of localsend", long_about = None)]
+#[command(before_help = ASCII_ART)]
 struct Cli {
     #[command(subcommand)]
     comando: Comandos,
@@ -20,15 +27,18 @@ struct Cli {
 enum Comandos {
     
 
-    #[command(name = "listen", alias = "-l")]
+    #[command(name = "-l to listen to incoming requests", alias = "-l")]
     Listen,
 
   
-    #[command(name = "send", alias = "-s")]
+    #[command(name = "-s to send files", alias = "-s")]
     Send ,
     
 
-    #[command(name = "config", alias = "-c")]
+    #[command(name = "-c to config your user \
+    [arguments] \
+    -n [name] to set your name\
+    -p [path] to your save folder", alias = "-c")]
     Config {
         
         #[arg(short = 'n', long = "name")]
@@ -74,3 +84,4 @@ fn main() {
         }
     }
 }
+

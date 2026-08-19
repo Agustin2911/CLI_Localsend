@@ -45,16 +45,25 @@ fn handle_client(mut stream: TcpStream,path : &str) -> io::Result<()> {
     println!("file: {:?}, id: {}", &json_request.files, &json_request.id);
     println!("Introduce 'yes' para aceptar la conexión o 'no' para rechazarla:");
 
-    let mut input = String::new();
-    input_validation(&mut input);
+    let mut input;
+    let mut  stt;
+    loop {
+        input = String::new();
+        input_validation(&mut input);
 
-    let stt = input.trim() == "yes";
-    if stt {
-        println!("Conexión aceptada");
-    } else {
-        println!("Conexión rechazada");
+        stt = input.trim() == "yes";
+        if stt {
+            println!("incoming files accepted");
+            break;
+        } else if input.trim() != "no" {
+            println!("Wrong answer , introduce yes or no");
+
+        } else {
+            println!("incoming files rejected ");
+            break;
+        }
+
     }
-
     let response = ReciverRespond { state: stt };
     let mut response_string = serde_json::to_string(&response)
         .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;

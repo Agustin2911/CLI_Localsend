@@ -31,7 +31,6 @@ pub fn select_a_file() -> String{
      
     let mut path=PathBuf::from(home_path);
 
-    path.push("Documentos");
 
     while selected_file_path=="" {
         
@@ -164,7 +163,21 @@ pub fn select_reciver()-> String{
     println!("select the device");
     input_validation(&mut input);
 
-    let number= input.trim().parse::<u16>().expect("error at parsing the string");
+    let number;
+
+    loop {
+     number=match input.trim().parse::<u16>(){
+
+           Ok(r)=>r,
+
+           Err(e)=>{
+               continue;
+           }
+       };
+
+       break;
+
+    }
 
     cont=1;
     for i in &devices{
@@ -203,18 +216,18 @@ pub fn send_a_file(){
 
     }
 
-    let mut device=select_reciver();
+    let mut device="no devices found".to_owned();
 
     let mut continue_searching="si".to_owned();
 
-    while device=="no device found" && continue_searching!="no"{
-
+    while device=="no devices found" && continue_searching.trim()!="no"{
 
         device=select_reciver();
 
-        if device=="no device found"{
-            
-           input_validation(&mut continue_searching);
+        if device=="no devices found" {
+            println!("no device found");
+            println!("Do you want to continue searching? ");
+            input_validation(&mut continue_searching);
         }
 
 
