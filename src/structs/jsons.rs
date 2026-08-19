@@ -34,3 +34,26 @@ pub struct File {
 
 
 }
+
+#[derive(Debug,Deserialize,Serialize)]
+pub struct  Json {
+
+    pub  name: String,
+    pub  path:String
+
+}
+
+impl Json{
+
+    pub fn change_name(&mut self,name:String){
+
+        self.name=name;
+
+    }
+
+    pub fn change_path(&mut self,path:String){
+
+        self.path=path;
+    }
+
+}

@@ -1,5 +1,5 @@
 use zeroconf::{ServiceType, prelude::*};
-use zeroconf::{MdnsService,MdnsBrowser};
+use zeroconf::{MdnsBrowser};
 use std::collections::HashMap;
 use std::time::Duration;
 use std::sync::{Arc,Mutex};
@@ -7,11 +7,22 @@ use std::sync::{Arc,Mutex};
 pub fn Device_finder()-> HashMap<String, String>{
 
 
-    let  mut users:Arc< Mutex< HashMap<String,String >>>=Arc::new(Mutex::new(HashMap::new()));
+    let users:Arc< Mutex< HashMap<String,String >>>=Arc::new(Mutex::new(HashMap::new()));
 
     let users_clone=users.clone();
 
-    let service_type= ServiceType::new("clilocalsend","tcp").expect("error at the creation of the service type");
+    
+    let service_type= match ServiceType::new("clilocalsend","tcp") {
+        
+        Ok(r)=> r,
+
+        Err(e)=>{
+
+            println!("error at creating the service type: {}",e);
+            return users.lock().unwrap().clone();
+        }
+        
+    };
 
 
     let mut browser= MdnsBrowser::new(service_type);
@@ -36,10 +47,23 @@ pub fn Device_finder()-> HashMap<String, String>{
     }));
 
 
-    let service_loop= browser.browse_services().expect("error at the declaration of the browser");
 
+    let service_loop= match  browser.browse_services() {
+        
+        Ok(r)=> r,
+        Err(e)=>{
+
+            println!("error at creating the service browser, error : {}",e);
+            return users.lock().unwrap().clone();
+        }
+
+    };
+    
     for i in 0..50{
-        service_loop.poll(Duration::from_millis(100)).expect("error in the loop of the browser");
+        
+        if let Err(e)=service_loop.poll(Duration::from_millis(100)){
+            println!("error : {}",e);
+        }
     }
 
     users.lock().unwrap().clone()
