@@ -1,10 +1,5 @@
 # cli_localsend
 
-  ____ _     ___   _                     _                    _ 
- / ___| |   |_ _| | |    ___   ___  __ _| |___  ___ _ __   __| |
-| |   | |    | |  | |   / _ \ / __|/ _` | / __|/ _ \ '_ \ / _` |
-| |___| |___ | |  | |__| (_) | (__| (_| | \__ \  __/ | | | (_| |
- \____|_____|___| |_____\___/ \___|\__,_|_|___/\___|_| |_|\__,_|
 
 Una implementación ligera y rápida por línea de comandos (CLI) inspirada en LocalSend, diseñada para transferir archivos entre dispositivos en la misma red local de forma segura y eficiente.
 
