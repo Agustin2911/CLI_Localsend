@@ -60,7 +60,7 @@ cli_localsend -c -n "MiNuevaPC"
 ```
 
 Cambiar el directorio de descargas (Path):
-```
+```Bash
 cli_localsend -c -p "/ruta/a/mi/carpeta"
 ```
 Bash
