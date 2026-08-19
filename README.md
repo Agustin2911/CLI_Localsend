@@ -27,3 +27,29 @@ Para que el comando `cli_localsend` esté disponible en cualquier carpeta de tu 
 
 ```bash
 cargo install --path .
+
+
+📖 Uso y Comandos
+Una vez instalado, podés interactuar con la herramienta utilizando las siguientes banderas (flags):
+
+🎧 Modo Receptor (Listener)
+Para poner tu computadora en modo espera para recibir archivos de otros dispositivos:
+
+Bash
+cli_localsend -l
+📤 Modo Emisor (Sender)
+Para iniciar la interfaz interactiva que te permitirá seleccionar archivos y buscar un dispositivo destino en tu red:
+
+Bash
+cli_localsend -s
+⚙️ Configuración (Config)
+Podés personalizar tu perfil en la red local modificando tu nombre visible o la ruta donde se guardan los archivos recibidos.
+
+Cambiar el nombre visible:
+
+Bash
+cli_localsend -c -n "MiNuevaPC"
+Cambiar el directorio de descargas (Path):
+
+Bash
+cli_localsend -c -p "/ruta/a/mi/carpeta"
